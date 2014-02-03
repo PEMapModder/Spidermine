@@ -18,6 +18,7 @@ public class SpiderServer implements Runnable {
 	/////////////////////////
 	Context app;
 	ConsoleChangeListener ccl;
+	ServerManager manager=new ServerManager(this);
 	/////////////////////
 	///////options///////
 	/////////////////////
@@ -62,6 +63,7 @@ public class SpiderServer implements Runnable {
 		status=RUNTIME;
 		startTime=System.currentTimeMillis();
 		lastTick=startTime;
+		
 		while(status==RUNTIME){
 			try {
 				tick();
@@ -84,6 +86,7 @@ public class SpiderServer implements Runnable {
 			Toast t=Toast.makeText(app, "Server overloaded! TPS approx. "+Double.toString((Math.pow(ti, -1))), Toast.LENGTH_SHORT);
 			t.show();
 		}
+		ccl.warning("Server overloaded!!!");
 	}
 	public short getStatus(){
 		return status;

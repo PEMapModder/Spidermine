@@ -1,8 +1,9 @@
 package pemapmodder.spidermine;
 
 public interface ConsoleChangeListener {
-	public void onInfoAdded(String info);
-	public void onWarningAdded(String warning);
-	public void onErrorAdded(String err);
-	public void onDebugAdded(String debug);
+	public void info(String info);
+	public void warning(String warning);
+	public void err(String err);
+	public void debug(String debug);
+	public void text();
 }
