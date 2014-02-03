@@ -2,6 +2,7 @@ package pemapmodder.spidermine.world.populator;
 
 import java.util.Random;
 
+import pemapmodder.spidermine.utils.math.MathUtils;
 import pemapmodder.spidermine.utils.math.Position;
 import pemapmodder.spidermine.world.Block;
 import pemapmodder.spidermine.world.World;

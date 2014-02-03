@@ -1,6 +1,6 @@
 package pemapmodder.spidermine;
 
-import pemapmodder.spidermine.managers.Serveanager;
+import pemapmodder.spidermine.managers.ServerManager;
 
 public class ConsoleInputListener{
 	public void cmd(String text, int window){

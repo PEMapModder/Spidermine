@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import pemapmodder.spidermine.managers.ServerManager;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,7 +19,7 @@ public class SpiderServer implements Runnable {
 	//////////tools//////////
 	/////////////////////////
 	Context app;
-	ConsoleChangeListener ccl;
+	public ConsoleChangeListener ccl;
 	ServerManager manager=new ServerManager(this);
 	/////////////////////
 	///////options///////
@@ -39,9 +41,13 @@ public class SpiderServer implements Runnable {
 	long startTime;
 	long lastTick;
 	///////////////////////////
-	//////////sockets//////////
+	//////////network//////////
 	///////////////////////////
 	DatagramSocket socket;
+	////////////////////////////
+	//////////managers//////////
+	////////////////////////////
+	
 	public SpiderServer(Bundle options, Context app, ConsoleChangeListener ccl)throws Throwable{
 		this.app=app;
 		this.ccl=ccl;

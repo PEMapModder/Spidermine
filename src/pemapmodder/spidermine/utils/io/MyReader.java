@@ -16,5 +16,11 @@ public class MyReader extends FileInputStream {
 			o+=(char)read();
 		return o;
 	}
+	public String readAll() throws Throwable {
+		String ret="";
+		for(int c=read(); c!=-1; c=read())
+			ret+=(char)c;
+		return ret;
+	}
 
 }
