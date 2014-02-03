@@ -1,26 +1,25 @@
 package pemapmodder.spidermine;
 
 import java.io.File;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pemapmodder.spidermine.managers.ServerManager;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 public class SpiderServer implements Runnable {
 	/////////////////////////
 	//////////tools//////////
 	/////////////////////////
-	Context app;
+	public Context app;
 	public ConsoleChangeListener ccl;
-	ServerManager manager=new ServerManager(this);
 	/////////////////////
 	///////options///////
 	/////////////////////
@@ -33,22 +32,24 @@ public class SpiderServer implements Runnable {
 	//////////info//////////
 	////////////////////////
 	private short status=PRESTART;
-	long ticks=0;
+	private long ticks=0;
 	/////////////////////////
 	//////////debug//////////
 	/////////////////////////
-	Logger logger;
-	long startTime;
-	long lastTick;
+	public Logger logger;
+	protected long startTime;
+	private long lastTick;
 	///////////////////////////
 	//////////network//////////
 	///////////////////////////
-	DatagramSocket socket;
+	public DatagramSocket socket;
+	public DatagramPacket packet;
 	////////////////////////////
 	//////////managers//////////
 	////////////////////////////
-	
-	public SpiderServer(Bundle options, Context app, ConsoleChangeListener ccl)throws Throwable{
+	public ServerManager manager=new ServerManager(this);
+	public SpiderServer(Bundle options, Context app, ConsoleChangeListener ccl)
+			throws Throwable{
 		this.app=app;
 		this.ccl=ccl;
 		ip=InetAddress.getByName(options.getString(ServerRunner.IP, "0.0.0.0"));
@@ -69,11 +70,15 @@ public class SpiderServer implements Runnable {
 		status=RUNTIME;
 		startTime=System.currentTimeMillis();
 		lastTick=startTime;
-		
+		try {
+			initNetworking();
+		} catch (Throwable e) {
+			err(e);
+		}
 		while(status==RUNTIME){
 			try {
 				tick();
-				ticks++;
+				this.ticks=getTicks() + 1;
 				long time=System.currentTimeMillis()-lastTick;
 				if(time>100)
 					onOverloaded(time);
@@ -85,6 +90,27 @@ public class SpiderServer implements Runnable {
 		}
 		status=PAUSED;
 		status=STOPPED;
+	}
+	protected void initNetworking()throws Throwable{
+		socket=new DatagramSocket(port, ip);
+		int length=1536;
+		byte[] buffer=new byte[length];
+		packet=new DatagramPacket(buffer, length);
+		socket.setSoTimeout(5000);
+		socket.receive(packet);
+		socket.setSoTimeout(0);
+		ByteBuffer b=ByteBuffer.wrap(packet.getData());
+		byte[] data=new byte[packet.getLength()];
+		b.get(data);
+		DatagramPacket o=new DatagramPacket(data, packet.getPort(), packet.getAddress(), packet.getLength());
+		handlePacket(o);
+	}
+	protected synchronized void handlePacket(DatagramPacket o)throws Throwable{
+		if(o!=null){
+			switch(o.getData()[0]&0xFF){
+			
+			}
+		}
 	}
 	protected void onOverloaded(long ti) {
 		logger.log(Level.WARNING, "Server overloaded. Tick interval: "+Long.toString(ti)+" ms.");
@@ -101,13 +127,15 @@ public class SpiderServer implements Runnable {
 		
 	}
 	public void err(Throwable e){
-		if(e instanceof InterruptedException){
+		if(e instanceof InterruptedException)
 			logger.log(Level.SEVERE, "InterruptedException", e);
-			Log.e("SpiderServer", "InterruptedException", e);
-		}
+		ccl.err("An error occurred: "+e.toString());
 	}
 	public final void stop(){
 		status=STOPPED;
+	}
+	public long getTicks() {
+		return ticks;
 	}
 	public final static short PRESTART=0,
 			RUNTIME=1,

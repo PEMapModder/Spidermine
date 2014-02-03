@@ -11,8 +11,8 @@ import android.os.Bundle;
 @SuppressWarnings("unused")
 public class EasyMod {
 	public static EasyMod load(File src, Context app, int server)throws Throwable{
-		ServerManager.get(server).ccl.info("Loading EasyMod from source at "+src.getAbsolutePath());
-		return new EasyMod(src, app, ServerManager.get(server));
+		ServerManager.getServer(server).ccl.info("Loading EasyMod from source at "+src.getAbsolutePath());
+		return new EasyMod(src, app, ServerManager.getServer(server));
 	}
 	private Context app;
 	private SpiderServer server;

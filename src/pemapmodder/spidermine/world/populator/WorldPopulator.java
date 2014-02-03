@@ -15,14 +15,18 @@ public class WorldPopulator {
 
 	private Random random;
 	private WorldPopulator(World world, Object seed, short type){
-		for(int x=0;x<256;x++){
+		
+		this.random=new Random(MathUtils.myHash(seed)/*+world.hashCode()*/);
+		for(int x=0;x<256;x++){//populate bedrock
 			for(int z=0;z<256;z++){
-				world.setBlock(new Position(x, 0, z), new Block(0), false);
+				world.setBlock(new Position(x, 0, z), new Block(7), false);
+				int height=random.nextInt()%4;
+				if(height==0)height=4;
+				for(int i=1;i<=height;i++)
+					world.setBlock(new Position(x, i, z), new Block(7), false);
+				
 			}
 		}
-		this.random=new Random(MathUtils.myHash(seed)/*+world.hashCode()*/);
-		Integer a=1;
-		
 	}
 
 	public final static short TYPE_SUPERFLAT=0x0;

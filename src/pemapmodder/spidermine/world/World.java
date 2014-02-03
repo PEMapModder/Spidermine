@@ -18,7 +18,7 @@ public class World{
 	public World(SpiderServer server, String name, Object seed, short type) {
 		this.type=type;
 		this.server=server;
-		dir=new File(server.dir+name+"/");
+		dir=new File(server.dir+"worlds/"+name+"/");
 		chunksDir=new File(dir+"chunks/");
 		boolean isNew=dir.mkdir();
 		try{

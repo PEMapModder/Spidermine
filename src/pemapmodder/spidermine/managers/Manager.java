@@ -1,5 +1,5 @@
 package pemapmodder.spidermine.managers;
 
-public interface Manager<O>{
-	public O get(String sid);
+public interface Manager<Managee, IdType>{
+	public Managee get(IdType id);
 }
