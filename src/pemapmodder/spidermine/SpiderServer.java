@@ -1,6 +1,7 @@
 package pemapmodder.spidermine;
 
 import java.io.File;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SpiderServer implements Runnable {
+	/////////////////////////
+	//////////tools//////////
+	/////////////////////////
 	Context app;
+	ConsoleChangeListener ccl;
 	/////////////////////
 	///////options///////
 	/////////////////////
@@ -32,8 +37,13 @@ public class SpiderServer implements Runnable {
 	Logger logger;
 	long startTime;
 	long lastTick;
-	public SpiderServer(Bundle options, Context app)throws Throwable{
+	///////////////////////////
+	//////////sockets//////////
+	///////////////////////////
+	DatagramSocket socket;
+	public SpiderServer(Bundle options, Context app, ConsoleChangeListener ccl)throws Throwable{
 		this.app=app;
+		this.ccl=ccl;
 		ip=InetAddress.getByName(options.getString(ServerRunner.IP, "0.0.0.0"));
 		port=options.getInt(ServerRunner.PORT, 19132);
 		name=options.getString(ServerRunner.NAME, "SpiderMine Server");
@@ -81,7 +91,7 @@ public class SpiderServer implements Runnable {
 	protected void tick()throws Throwable{
 		
 	}
-	protected void err(Throwable e){
+	public void err(Throwable e){
 		if(e instanceof InterruptedException){
 			logger.log(Level.SEVERE, "InterruptedException", e);
 			Log.e("SpiderServer", "InterruptedException", e);

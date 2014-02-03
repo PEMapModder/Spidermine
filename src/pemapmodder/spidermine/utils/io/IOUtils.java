@@ -1,4 +1,4 @@
-package pemapmodder.spidermine.utils;
+package pemapmodder.spidermine.utils.io;
 
 public class IOUtils {
 	public static boolean populateServer(){

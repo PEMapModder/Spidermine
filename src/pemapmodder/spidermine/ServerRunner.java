@@ -5,9 +5,10 @@ import android.os.Bundle;
 
 public class ServerRunner extends Thread{
 	public SpiderServer server;
-	public ServerRunner(Bundle options, Context app) throws Throwable{
+	public ServerRunner(Bundle options, Context app, ConsoleChangeListener ccl)
+			throws Throwable{
 		setPriority(options.getInt(PRIORITY));
-		new SpiderServer(options, app);
+		new SpiderServer(options, app, ccl);
 	}
 	@Override public synchronized void start(){
 		server.run();
