@@ -1,11 +1,11 @@
 package pemapmodder.spidermine;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 
 public class ServerRunner extends Thread{
 	public SpiderServer server;
-	public ServerRunner(Bundle options, Context app, ConsoleChangeListener ccl)
+	public ServerRunner(Bundle options, Activity app, ConsoleChangeListener ccl)
 			throws Throwable{
 		setPriority(options.getInt(PRIORITY));
 		new SpiderServer(options, app, ccl);

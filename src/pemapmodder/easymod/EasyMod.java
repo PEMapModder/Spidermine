@@ -2,9 +2,9 @@ package pemapmodder.easymod;
 
 import java.io.File;
 
+import pemapmodder.easymod.xml.Xml;
 import pemapmodder.spidermine.SpiderServer;
 import pemapmodder.spidermine.managers.ServerManager;
-import pemapmodder.spidermine.utils.io.MyReader;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -18,15 +18,21 @@ public class EasyMod {
 	private SpiderServer server;
 	private Bundle res;
 	private EasyMod(File f, Context app, SpiderServer server) throws Throwable{
+		if(!f.isFile()){
+			throw new Throwable("Passed illegal param0 : not a file");
+		}
+		String ext="";
+		for(int i=f.getName().length()-1; i>=0; i--)
+			ext=ext+f.getName().charAt(i);
+		ext=ext.split(".", 2)[0];
+		boolean bool=ext.equalsIgnoreCase("helm")||
+				ext.equalsIgnoreCase("xml")||
+				ext.equalsIgnoreCase("easymod")||
+				ext.equalsIgnoreCase("mod");
+		if(!bool)
+			server.ccl.warning("You are recommended to use the file extension xml, helm, easymod or mod for EasyMod files.");
 		this.app=app;
 		this.server=server;
-		MyReader r=new MyReader(f);
-		String src=r.readAll();
-		r.close();
-		String[] resrc=src.split("<res>", 2)[1].split("\n");
-		Bundle res=new Bundle();
-		for(int i=0; i<resrc.length; i++)
-			res.putString(resrc[i].split("=>")[0], resrc[i].split("=>", 2)[1]);
-		this.res=res;
+		Xml content=Xml.parse(f);
 	}
 }

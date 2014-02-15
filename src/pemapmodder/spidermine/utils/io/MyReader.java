@@ -16,11 +16,26 @@ public class MyReader extends FileInputStream {
 			o+=(char)read();
 		return o;
 	}
-	public String readAll() throws Throwable {
+	public String readAll() throws NullPointerException, IOException, IndexOutOfBoundsException{
 		String ret="";
 		for(int c=read(); c!=-1; c=read())
 			ret+=(char)c;
 		return ret;
+	}
+	/**
+	 * 
+	 * @param file
+	 * @return all contents
+	 * @throws FileNotFoundException
+	 * @throws NullPointerException
+	 * @throws IndexOutOfBoundsException
+	 * @throws IOException
+	 */
+	public static String readAll(File f) throws FileNotFoundException, NullPointerException, IndexOutOfBoundsException, IOException{
+		MyReader mr=new MyReader(f);
+		String all=mr.readAll();
+		mr.close();
+		return all;
 	}
 
 }
