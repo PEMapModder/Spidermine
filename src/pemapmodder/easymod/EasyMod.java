@@ -3,8 +3,8 @@ package pemapmodder.easymod;
 import java.io.File;
 
 import pemapmodder.easymod.xml.Xml;
-import pemapmodder.spidermine.SpiderServer;
-import pemapmodder.spidermine.managers.ServerManager;
+import pemapmodder.old_spidermine.SpiderServer;
+import pemapmodder.old_spidermine.managers.ServerManager;
 import android.content.Context;
 import android.os.Bundle;
 

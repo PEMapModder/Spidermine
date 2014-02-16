@@ -3,7 +3,7 @@ package pemapmodder.easymod.xml;
 import java.io.File;
 import java.io.IOException;
 
-import pemapmodder.spidermine.utils.io.MyReader;
+import pemapmodder.old_spidermine.utils.io.MyReader;
 
 public class Xml {
 	private final static int STATUS_RAW_CONTENT=0x0;
