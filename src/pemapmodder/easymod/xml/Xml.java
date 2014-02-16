@@ -12,11 +12,12 @@ public class Xml {
 	private final static int STATUS_ATTRIBUTE_VAL_ONE=0x3;
 	private final static int STATUS_ATTRIBUTE_VAL_SGL_QUOTE=0x4;
 	private final static int STATUS_ATTRIBUTE_VAL_DBL_QUOTE=0x5;
-	private final static int STATUS_COMMENT=0x10;
-	private final static int BUFFER_MAX_SIZE=10;
+	private final static int STATUS_COMMENT=0x6;
 	Element[] elements={};
+	@SuppressWarnings("unused")
 	private Xml(String src) throws XmlLangException{
 		int nestTags=0;
+		String[] nests={};
 		int memory=-1;
 		int status=STATUS_RAW_CONTENT;
 		String[] buffer={
@@ -33,17 +34,27 @@ public class Xml {
 			}
 			switch(status){
 			case STATUS_RAW_CONTENT:
-				if(tc=='<')
+				if(tc=='<'){
 					status=STATUS_ELEMENT_NAME;
+					continue;
+				}
+				//TODO
 				break;
 			case STATUS_ELEMENT_NAME:
+				if(tc==' '){
+					nestTags++;
+					
+					status=STATUS_ATTRIBUTE_NAME;
+					continue;
+				}
+				buffer[1]+=tc;
 				break;
 			case STATUS_ATTRIBUTE_NAME:
+				
 				break;
 			case STATUS_ATTRIBUTE_VAL_ONE:
 				break;
 			case STATUS_ATTRIBUTE_VAL_SGL_QUOTE:
-				break;
 			case STATUS_ATTRIBUTE_VAL_DBL_QUOTE:
 				break;
 			case STATUS_COMMENT:
