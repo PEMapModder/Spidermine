@@ -1,9 +1,8 @@
-package pemapmodder.easymod.xml;
+package quantumWorks.easymod.xml;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-
-import pemapmodder.old_spidermine.utils.io.MyReader;
 
 public class Xml {
 	private final static int STATUS_RAW_CONTENT=0x0;
@@ -65,9 +64,22 @@ public class Xml {
 	
 	public static Xml parse(File f)
 			throws IOException, XmlLangException{
-		//TODO parse
-		String src=MyReader.readAll(f);
-		return new Xml(src);
+		return new Xml(readFile(f));
+	}
+
+	public static String readFile(File f)throws IOException{
+		BufferedReader br=new BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(f)));
+		String ret="";
+		try{
+			String line;
+			while((line = br.readLine()) != null)
+				ret += (line+"\n");
+		}catch(IOException e){
+			br.close();
+			throw e;
+		}
+		br.close();
+		return ret;
 	}
 
 }

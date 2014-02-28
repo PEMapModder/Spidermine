@@ -1,4 +1,4 @@
-package pemapmodder.spidermine.android;
+package quantumWorks.spidermine.android;
 
 import pemapmodder.spidermine.android.R;
 import android.app.Activity;

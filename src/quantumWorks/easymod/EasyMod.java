@@ -1,19 +1,18 @@
-package pemapmodder.easymod;
+package quantumWorks.easymod;
 
 import java.io.File;
 
-import pemapmodder.easymod.xml.Xml;
-import pemapmodder.old_spidermine.SpiderServer;
-import pemapmodder.old_spidermine.managers.ServerManager;
+import quantumWorks.easymod.xml.Xml;
+import quantumWorks.spidermine.SpiderServer;
 import android.content.Context;
 import android.os.Bundle;
 
 @SuppressWarnings("unused")
 public class EasyMod {
-	public static EasyMod load(File src, Context app, int server)throws Throwable{
-		ServerManager.getServer(server).ccl.info("Loading EasyMod from source at "+src.getAbsolutePath());
-		return new EasyMod(src, app, ServerManager.getServer(server));
-	}
+	/*public static EasyMod load(File src, Context app, InetSocketAddress server)throws Throwable{
+		ServerManager.get(server).ccl.info("Loading EasyMod from source at "+src.getAbsolutePath());
+		return new EasyMod(src, app, ServerManager.get(server));
+	}*/
 	private Context app;
 	private SpiderServer server;
 	private Bundle res;
@@ -29,8 +28,8 @@ public class EasyMod {
 				ext.equalsIgnoreCase("xml")||
 				ext.equalsIgnoreCase("easymod")||
 				ext.equalsIgnoreCase("mod");
-		if(!bool)
-			server.ccl.warning("You are recommended to use the file extension xml, helm, easymod or mod for EasyMod files.");
+		//if(!bool)
+			//server.ccl.warning("You are recommended to use the file extension xml, helm, easymod or mod for EasyMod files.");
 		this.app=app;
 		this.server=server;
 		Xml content=Xml.parse(f);

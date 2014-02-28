@@ -1,4 +1,4 @@
-package pemapmodder.easymod.xml;
+package quantumWorks.easymod.xml;
 
 public class Element {
 	Element[] subElements={};
