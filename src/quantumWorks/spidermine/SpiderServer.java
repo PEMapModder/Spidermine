@@ -9,20 +9,50 @@ import quantumWorks.spidermine.managers.ServerManager;
 import android.os.Bundle;
 
 public class SpiderServer extends Thread{
+	private final static long NANO_RATIO=1000000000L;
 	public final static short STATUS_PRESTART=(short)0,
 			STATUS_STARTED=(short)1,
 			STATUS_PAUSED=(short)2,
 			STATUS_STOPPED=(short)3;
+	public static final int INFINITE_SCHEDULE = Integer.MIN_VALUE;
 	private final InetSocketAddress ip;
 	private final String name;
 	public final ServerManager manager;
 	public long ticks=0;
 	public long startTime;
 	public long lastMilli;
+	public long[] thisSecondNanos={};
+	private double tps=0;
 	public short status=STATUS_PRESTART;
 	public final Console console;
+	public ScheduledCallback[] scheduledCallbacks={};
+	public int[] scheduleIntervals={};
+	public int[] scheduleTimeLeft={};
+	public int[] scheduleRuns={};
+	public Bundle[] scheduleData={};
 	protected void tickEvent(){
-		
+		for(int i=0; i<scheduleRuns.length; i++){//check schedules
+			scheduleTimeLeft[i]--;
+			if(scheduleTimeLeft[i]==0){
+				scheduleTimeLeft[i]=scheduleIntervals[i];
+				if(scheduleRuns[i]==INFINITE_SCHEDULE || scheduleRuns[i]>0){
+					if(scheduleRuns[i]!=INFINITE_SCHEDULE)
+						scheduleRuns[i]--;
+					scheduledCallbacks[i].run(scheduleData[i]);
+				}
+			}
+		}
+	}
+	public void schedule(int interval, ScheduledCallback callback, int runs, Bundle data){
+		int offset=scheduleRuns.length;
+		scheduledCallbacks[offset]=callback;
+		scheduleIntervals[offset]=interval;
+		scheduleTimeLeft[offset]=interval;
+		scheduleRuns[offset]=runs;
+		scheduleData[offset]=data;
+	}
+	public static interface ScheduledCallback{
+		public void run(Bundle data);
 	}
 	public SpiderServer(Bundle options)throws SocketAddressUsedException, UnknownHostException{
 		console=new Console(this);
@@ -37,13 +67,13 @@ public class SpiderServer extends Thread{
 	@Override public synchronized void start(){
 		super.start();
 		try {
-			init();
+			operate();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	protected void init() throws InterruptedException{
+	protected void operate() throws InterruptedException{
 		status=STATUS_STARTED;
 		startTime=System.nanoTime();
 		lastMilli=startTime;
@@ -52,7 +82,16 @@ public class SpiderServer extends Thread{
 			tickEvent();
 			Thread.sleep(50);
 			lastMilli=System.nanoTime();
+			thisSecondNanos[thisSecondNanos.length]=System.nanoTime();
+			long diff=System.nanoTime()-thisSecondNanos[0];
+			if(diff > NANO_RATIO){
+				tps=thisSecondNanos.length*NANO_RATIO/diff;
+				thisSecondNanos=new long[]{};
+			}
 		}
+	}
+	public double getTps() {
+		return tps;
 	}
 	public String getServerName(){
 		return name;

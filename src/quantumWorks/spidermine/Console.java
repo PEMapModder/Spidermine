@@ -47,7 +47,8 @@ public class Console implements CommandIssuer{
 			try {
 				while((line=in.readLine())!=null){
 					if(line.charAt(0)!='#'){
-						
+						String[] pieces=line.split(" ", 2);
+						triggerCmd(pieces[0], pieces[1].split(" "));
 					}
 				}
 			} catch (IOException e) {
