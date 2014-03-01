@@ -1,4 +1,4 @@
-package quantumWorks.easymod.xml;
+package quantumworks.easymod.xml;
 
 import java.io.BufferedReader;
 import java.io.File;

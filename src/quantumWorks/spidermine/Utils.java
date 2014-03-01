@@ -1,4 +1,4 @@
-package quantumWorks.spidermine;
+package quantumworks.spidermine;
 
 import java.io.File;
 

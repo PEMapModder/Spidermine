@@ -1,7 +1,7 @@
-package quantumWorks.spidermine.managers;
+package quantumworks.spidermine.managers;
 
-import quantumWorks.spidermine.*;
-import quantumWorks.spidermine.objects.*;
+import quantumworks.spidermine.*;
+import quantumworks.spidermine.objects.*;
 
 public class CommandHandler implements Manager<Command, String>{
 	public final SpiderServer server;

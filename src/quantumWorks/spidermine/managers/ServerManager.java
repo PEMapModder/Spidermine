@@ -1,8 +1,8 @@
-package quantumWorks.spidermine.managers;
+package quantumworks.spidermine.managers;
 
 import java.net.InetSocketAddress;
 
-import quantumWorks.spidermine.SpiderServer;
+import quantumworks.spidermine.SpiderServer;
 
 public class ServerManager implements Manager<Manager<?,?>, String>{
 	public final SpiderServer server;

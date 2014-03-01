@@ -1,4 +1,4 @@
-package quantumWorks.spidermine.android;
+package quantumworks.spidermine.android;
 
 import pemapmodder.spidermine.android.R;
 import android.app.Activity;
@@ -21,12 +21,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener{
 	public LinearLayout layout(){
 		LinearLayout ll=new LinearLayout(this);
 		TextView title=new TextView(this);
-		title.setTextSize(TypedValue.COMPLEX_UNIT_SP);
-		//title.setText(R.string.ENTER_TITLE);
-		ll.addView(title);
-		Button newServer=new Button(this);
-		newServer.setOnClickListener(this);
-		newServer.setId(NEW_SERVER);
+		
 		return ll;
 	}
 	@Override public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,11 +1,11 @@
-package quantumWorks.spidermine;
+package quantumworks.spidermine;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import quantumWorks.spidermine.objects.CommandIssuer;
+import quantumworks.spidermine.objects.CommandIssuer;
 
 public class Console implements CommandIssuer{
 	public final SpiderServer server;

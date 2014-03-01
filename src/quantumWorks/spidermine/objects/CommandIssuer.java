@@ -1,4 +1,4 @@
-package quantumWorks.spidermine.objects;
+package quantumworks.spidermine.objects;
 
 
 public interface CommandIssuer{

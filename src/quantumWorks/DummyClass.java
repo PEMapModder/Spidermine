@@ -1,4 +1,4 @@
-package quantumWorks;
+package quantumworks;
 
 public class DummyClass {
 

@@ -1,11 +1,12 @@
-package quantumWorks.spidermine;
+package quantumworks.spidermine;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-import quantumWorks.spidermine.exceptions.SocketAddressUsedException;
-import quantumWorks.spidermine.managers.ServerManager;
+import quantumworks.spidermine.exceptions.SocketAddressUsedException;
+import quantumworks.spidermine.managers.ServerManager;
+import android.app.Activity;
 import android.os.Bundle;
 
 public class SpiderServer extends Thread{
@@ -30,6 +31,7 @@ public class SpiderServer extends Thread{
 	public int[] scheduleTimeLeft={};
 	public int[] scheduleRuns={};
 	public Bundle[] scheduleData={};
+	private Activity app;
 	protected void tickEvent(){
 		for(int i=0; i<scheduleRuns.length; i++){//check schedules
 			scheduleTimeLeft[i]--;
@@ -54,7 +56,8 @@ public class SpiderServer extends Thread{
 	public static interface ScheduledCallback{
 		public void run(Bundle data);
 	}
-	public SpiderServer(Bundle options)throws SocketAddressUsedException, UnknownHostException{
+	public SpiderServer(Bundle options, Activity uiThread)throws SocketAddressUsedException, UnknownHostException{
+		app=uiThread;
 		console=new Console(this);
 		int port=options.getInt(OPTIONS_port, 19132);
 		InetSocketAddress address=new InetSocketAddress(InetAddress.getByName(options.getString(OPTIONS_ip, "0.0.0.0")), port);
@@ -98,6 +101,9 @@ public class SpiderServer extends Thread{
 	}
 	public InetSocketAddress getIp(){
 		return ip;
+	}
+	public Activity getApp() {
+		return app;
 	}
 	public final static String OPTIONS_ip="options.address.string",
 			OPTIONS_port="options.address.port",

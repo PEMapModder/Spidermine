@@ -1,4 +1,4 @@
-package quantumWorks.utils.io;
+package quantumworks.utils.io;
 
 import java.io.File;
 

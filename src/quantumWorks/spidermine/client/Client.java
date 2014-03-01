@@ -1,7 +1,7 @@
-package quantumWorks.spidermine.client;
+package quantumworks.spidermine.client;
 
-import quantumWorks.spidermine.SpiderServer;
-import quantumWorks.spidermine.objects.CommandIssuer;
+import quantumworks.spidermine.SpiderServer;
+import quantumworks.spidermine.objects.CommandIssuer;
 
 public class Client implements CommandIssuer{
 	public SpiderServer server;

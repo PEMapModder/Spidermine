@@ -1,4 +1,4 @@
-package quantumWorks.spidermine.managers;
+package quantumworks.spidermine.managers;
 
 public interface Manager<Managee, Identifier> {
 	public Managee get(Identifier id);

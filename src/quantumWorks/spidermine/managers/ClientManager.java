@@ -1,7 +1,7 @@
-package quantumWorks.spidermine.managers;
+package quantumworks.spidermine.managers;
 
-import quantumWorks.spidermine.SpiderServer;
-import quantumWorks.spidermine.client.Client;
+import quantumworks.spidermine.SpiderServer;
+import quantumworks.spidermine.client.Client;
 
 public class ClientManager implements Manager<Client,String>{
 	public SpiderServer server;

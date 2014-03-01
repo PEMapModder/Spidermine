@@ -1,10 +1,10 @@
-package quantumWorks.spidermine.networking;
+package quantumworks.spidermine.networking;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import quantumWorks.spidermine.SpiderServer;
+import quantumworks.spidermine.SpiderServer;
 
 public class NetworkHandler extends Thread{
 	public DatagramSocket socket=null;

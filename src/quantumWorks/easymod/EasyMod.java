@@ -1,9 +1,9 @@
-package quantumWorks.easymod;
+package quantumworks.easymod;
 
 import java.io.File;
 
-import quantumWorks.easymod.xml.Xml;
-import quantumWorks.spidermine.SpiderServer;
+import quantumworks.easymod.xml.Xml;
+import quantumworks.spidermine.SpiderServer;
 import android.content.Context;
 import android.os.Bundle;
 

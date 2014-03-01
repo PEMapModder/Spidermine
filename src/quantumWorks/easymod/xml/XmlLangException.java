@@ -1,4 +1,4 @@
-package quantumWorks.easymod.xml;
+package quantumworks.easymod.xml;
 
 public class XmlLangException extends Exception {
 
