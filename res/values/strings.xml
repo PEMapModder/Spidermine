@@ -10,5 +10,8 @@
     <string name="title_activity_add_new_server">AddNewServerActivity</string>
     <string name="title_activity_create_new_server">Create a New Server</string>
     <string name="title_activity_server_main_control_panel">Server Main Control Panel</string>
+    <string name="title_activity_console_panel">Console Panel</string>
+    <string name="console_console">Console</string>
+    <string name="loading_dot_dot_dot">Loading#8230;</string>
 
 </resources>

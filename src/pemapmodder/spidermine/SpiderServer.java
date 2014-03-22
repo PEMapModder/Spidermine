@@ -34,7 +34,7 @@ public class SpiderServer extends Thread{
 	public int[] scheduleTimeLeft={};
 	public int[] scheduleRuns={};
 	public Bundle[] scheduleData={};
-	private Activity app;
+	public final Activity app;
 	protected void tickEvent(){
 		for(int i=0; i<scheduleRuns.length; i++){//check schedules
 			scheduleTimeLeft[i]--;

@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
 
 public class P {
 	// string functions
-	public String implode(String divider, String[] string){
+	public static String implode(String divider, String[] string){
 		String ret="";
 		for(int i=0; i<string.length; i++){
 			ret+=string[0];
@@ -21,7 +21,7 @@ public class P {
 	}
 	
 	// file
-	public String file_get_contents(String path) throws IOException{
+	public static String file_get_contents(String path) throws IOException{
 		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
 		String ret="";
 		String line;
@@ -30,10 +30,10 @@ public class P {
 		br.close();
 		return ret;
 	}
-	public void file_put_contents(String path, String content) throws IOException{
+	public static void file_put_contents(String path, String content) throws IOException{
 		file_put_contents(path, content, false);
 	}
-	public void file_put_contents(String path, String content, boolean isAppend) throws IOException{
+	public static void file_put_contents(String path, String content, boolean isAppend) throws IOException{
 		File file=new File(path);
 		if(!isAppend){
 			file.delete();

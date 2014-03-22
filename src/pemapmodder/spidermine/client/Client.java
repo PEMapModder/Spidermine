@@ -8,7 +8,7 @@ public class Client implements CommandIssuer{
 	public Client(SpiderServer server){
 		this.server=server;
 	}
-	@Override public void triggerCmd(String cmd, String[] params) {
+	public void triggerCmd(String cmd, String[] params) {
 		server.manager.cmd.invokeCmd(server.manager.cmd.get(cmd), params, this);
 	}
 	@Override public void out(String line) {

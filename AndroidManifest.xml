@@ -50,6 +50,10 @@
             android:name="pemapmodder.spidermine.android.ServerMainControlPanel"
             android:label="@string/title_activity_server_main_control_panel" >
         </activity>
+        <activity
+            android:name="pemapmodder.spidermine.android.ConsolePanel"
+            android:label="@string/title_activity_console_panel" >
+        </activity>
     </application>
 
 </manifest>

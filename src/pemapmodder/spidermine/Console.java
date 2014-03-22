@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
+import pemapmodder.spidermine.objects.Command;
 import pemapmodder.spidermine.objects.CommandIssuer;
 
 
@@ -57,16 +57,19 @@ public class Console implements CommandIssuer{
 			}
 		}
 	}
-	@Override public void triggerCmd(String cmd, String[] params){
-		
-	}
 	@Override protected void finalize() throws Throwable{
 		in.close();
 		out.close();
 		super.finalize();
 	}
-	@Override
-	public int getType() {
+	public void triggerCmd(String cmd, String[] params){
+		Command command=server.manager.cmd.get(cmd);
+		server.manager.cmd.invokeCmd(command, params, this);
+	}
+	@Override public int getType() {
 		return TYPE_CONSOLE;
+	}
+	public String toString(){
+		return "Console";
 	}
 }

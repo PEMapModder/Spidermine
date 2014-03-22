@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import pemapmodder.spidermine.SpiderServer;
+import pemapmodder.spidermine.network.packet.PacketParser;
 
 
 public class NetworkHandler extends Thread{
@@ -27,8 +28,9 @@ public class NetworkHandler extends Thread{
 			try{
 				socket.receive(packet);
 			}catch(IOException e){
-				
+				e.printStackTrace();
 			}
+			PacketParser parser=new PacketParser(packet.getData());
 		}
 	}
 }
