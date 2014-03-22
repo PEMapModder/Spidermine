@@ -11,9 +11,16 @@ public class NetworkHandler extends Thread{
 	public DatagramSocket socket=null;
 	public DatagramPacket packet=null;
 	public final SpiderServer server;
-	public NetworkHandler(SpiderServer server) throws SocketException{
+	public NetworkHandler(SpiderServer server){
 		this.server=server;
-		socket=new DatagramSocket(server.getIp());
-		socket.setSoTimeout(5000);
+		try{
+			socket=new DatagramSocket(server.getIp());
+		}catch(SocketException e){
+			server.console.out("[SEVERE ERROR] SpiderMine is unable to create socket via address "+server.getIp().toString()+". Server starting aborted.");
+		}
+	}
+	@Override public synchronized void start(){
+		super.start();
+		
 	}
 }

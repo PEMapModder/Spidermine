@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
 import pemapmodder.spidermine.android.R;
+import pemapmodder.spidermine.events.server.ServerStopEvent;
 import pemapmodder.spidermine.exceptions.SocketAddressUsedException;
 import pemapmodder.spidermine.managers.ServerManager;
 
@@ -74,15 +75,18 @@ public class SpiderServer extends Thread{
 		try {
 			operate();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(console!=null){
+				console.out("[SEVERE ERROR] The SpiderMine server operation has been interrupted. The server operation has been forced closed.");
+			}
 		}
 	}
 	protected void operate() throws InterruptedException{
+		// prepare server status
 		status=STATUS_STARTED;
 		startTime=System.nanoTime();
 		lastMilli=startTime;
 		while(status==STATUS_STARTED){
+			// tick operation
 			ticks++;
 			tickEvent();
 			Thread.sleep(50);
@@ -94,6 +98,8 @@ public class SpiderServer extends Thread{
 				thisSecondNanos=new long[]{};
 			}
 		}
+		// server stopped
+		manager.evt.get(ServerStopEvent.class).invoke(null);
 	}
 	public double getTps() {
 		return tps;
