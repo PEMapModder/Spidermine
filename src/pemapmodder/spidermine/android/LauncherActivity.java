@@ -16,30 +16,31 @@ import android.widget.TextView;
 public class LauncherActivity extends Activity implements OnClickListener{
 
 	public final static int NEW_SERVER_BUTTON=0x6d9753a0;
+	public SpiderServer[] savedServers=ServerManager.getAll();
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(layout());
 	}
 	public LinearLayout layout(){
 		LinearLayout ll=new LinearLayout(this);
+		ll.setOrientation(LinearLayout.VERTICAL);
+		
 		TextView title=new TextView(this);
 		title.setText(R.string.app_name);
 		title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
-		ll.setOrientation(LinearLayout.VERTICAL);
 		ll.addView(title);
 		
 		Button addServer=new Button(this);
 		addServer.setText(R.string.add_new_server);
-		addServer.setOnClickListener(this);
 		addServer.setId(NEW_SERVER_BUTTON);
+		addServer.setOnClickListener(this);
 		
 		LinearLayout serversList=new LinearLayout(this);
 		serversList.setOrientation(LinearLayout.VERTICAL);
-		SpiderServer[] servers=ServerManager.getAll();
-		for(int i=0; i<servers.length; i++){
+		savedServers=ServerManager.getAll();
+		for(int i=0; i<savedServers.length; i++){
 			TextView s=new TextView(this);
-			SpiderServer server=servers[i];
-			s.setText(server.toString());
+			s.setText(savedServers[i].toString());
 			s.setId(0x80001000+i);
 			s.setOnClickListener(this);
 			serversList.addView(s);
@@ -52,14 +53,14 @@ public class LauncherActivity extends Activity implements OnClickListener{
 		return true;
 	}
 	@Override public void onClick(View v){
-		if(v.getId() >= 0x80001000){
-			SpiderServer server=ServerManager.getAll()[v.getId()-0x80001000];
-			startActivity(new Intent(this, ManageServerMainActivity.class)
-					.putExtra(ManageServerMainActivity.SERVER_PORT, server.getIp().getPort())
-					.putExtra(ManageServerMainActivity.SERVER_IP, server.getIp().getAddress().getHostAddress()));
+		if(v.getId()>=0x80001000&&v.getId()<0x80001000+savedServers.length){
+			int id=v.getId()-0x80001000;
+			startActivity(new Intent(this, ServerMainControlPanel.class)
+					.putExtra(ServerMainControlPanel.INTENT_SERVER_PORT, savedServers[id].getIp().getPort())
+					.putExtra(ServerMainControlPanel.INTENT_SERVER_IP, savedServers[id].getIp().getAddress().getHostAddress()));
 		}
-		else if(v.getId() == NEW_SERVER_BUTTON){
-			startActivity(new Intent(this, LauncherActivity.class));
+		if(v.getId() == NEW_SERVER_BUTTON){
+			startActivity(new Intent(this, CreateNewServerActivity.class));
 		}
 	}
 

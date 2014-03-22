@@ -1,36 +1,26 @@
 package pemapmodder.spidermine.events;
 
 import pemapmodder.spidermine.SpiderServer;
+import android.os.Bundle;
 
-public abstract class Event<Param, Ret, OutputResult>{
-	public final SpiderServer server;
+public abstract class Event{
 	protected EventHandler[] handlers;
+	public final SpiderServer server;
 	public Event(SpiderServer server){
 		this.server=server;
 	}
-	public void register(EventHandler handler){
-		this.handlers[handlers.length]=handler;
+	public void registerHandler(EventHandler handler){
+		handlers[handlers.length]=handler;
 	}
-	public OutputResult invoke(Param data){
+	public Bundle invoke(Bundle data){
 		for(int i=0; i<handlers.length; i++){
-			EventHandlerResult result=handlers[i].handleEvent(data);
-			proceedResult(result.result);
-			if(!result.contStatus)
+			EventResult result=handlers[i].handleEvent(data);
+			evalResult(result.result);
+			if(!result.doCont)
 				break;
 		}
-		return getOutputResult();
+		return getOutput();
 	}
-	public abstract void proceedResult(Ret monoResult);
-	public abstract OutputResult getOutputResult();
-	public abstract class EventHandler{
-		public abstract EventHandlerResult handleEvent(Param data);
-	}
-	public class EventHandlerResult{
-		public final boolean contStatus;
-		public final Ret result;
-		public EventHandlerResult(boolean contStatus, Ret result){
-			this.contStatus=contStatus;
-			this.result=result;
-		}
-	}
+	public abstract void evalResult(Bundle data);
+	public abstract Bundle getOutput();
 }

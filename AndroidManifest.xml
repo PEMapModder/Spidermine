@@ -42,6 +42,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pemapmodder.spidermine.android.LauncherActivity" />
         </activity>
+        <activity
+            android:name="pemapmodder.spidermine.android.CreateNewServerActivity"
+            android:label="@string/title_activity_create_new_server" >
+        </activity>
+        <activity
+            android:name="pemapmodder.spidermine.android.ServerMainControlPanel"
+            android:label="@string/title_activity_server_main_control_panel" >
+        </activity>
     </application>
 
 </manifest>

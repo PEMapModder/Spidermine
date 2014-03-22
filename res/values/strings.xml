@@ -8,5 +8,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="add_new_server">Add new server</string>
     <string name="title_activity_add_new_server">AddNewServerActivity</string>
+    <string name="title_activity_create_new_server">Create a New Server</string>
+    <string name="title_activity_server_main_control_panel">Server Main Control Panel</string>
 
 </resources>
