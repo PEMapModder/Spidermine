@@ -1,14 +1,13 @@
 package pemapmodder.spidermine;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-
 import pemapmodder.spidermine.android.R;
 import pemapmodder.spidermine.events.server.ServerStopEvent;
 import pemapmodder.spidermine.exceptions.SocketAddressUsedException;
 import pemapmodder.spidermine.managers.ServerManager;
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -35,6 +34,7 @@ public class SpiderServer extends Thread{
 	public int[] scheduleRuns={};
 	public Bundle[] scheduleData={};
 	public final Activity app;
+	public final File dir;
 	protected void tickEvent(){
 		for(int i=0; i<scheduleRuns.length; i++){//check schedules
 			scheduleTimeLeft[i]--;
@@ -59,7 +59,7 @@ public class SpiderServer extends Thread{
 	public static interface ScheduledCallback{
 		public void run(Bundle data);
 	}
-	public SpiderServer(Bundle options, Activity uiThread)throws SocketAddressUsedException, UnknownHostException{
+	public SpiderServer(Bundle options, Activity uiThread, File dir)throws SocketAddressUsedException, UnknownHostException{
 		app=uiThread;
 		console=new Console(this);
 		int port=options.getInt(OPTIONS_port, 19132);
@@ -69,6 +69,7 @@ public class SpiderServer extends Thread{
 			throw new SocketAddressUsedException();
 		name=options.getString(OPTIONS_name, "SpiderMine MCPE Server");
 		manager=new ServerManager(this);
+		this.dir=dir;
 	}
 	@Override public synchronized void start(){
 		super.start();

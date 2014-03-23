@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import pemapmodder.spidermine.Console;
 import pemapmodder.spidermine.SpiderServer;
 import pemapmodder.spidermine.managers.ServerManager;
 import pemapmodder.utils.php.functions.P;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 public class ConsolePanel extends Activity{
 	private SpiderServer server;
+	private Console console;
 	@Override protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_console_panel);
@@ -24,7 +26,6 @@ public class ConsolePanel extends Activity{
 			server=ServerManager.get(new InetSocketAddress(
 					InetAddress.getByName(getIntent().getStringExtra(ServerMainControlPanel.INTENT_SERVER_IP)),
 					getIntent().getIntExtra(ServerMainControlPanel.INTENT_SERVER_PORT, 19132)));
-			
 		}catch(UnknownHostException e){
 			if(e instanceof UnknownHostException){
 				String path=Environment.getExternalStorageDirectory().getAbsolutePath()+"SpiderMine/error-dump-at-"
@@ -44,6 +45,7 @@ public class ConsolePanel extends Activity{
 				finish();
 			}
 		}
+		console=server.console;
 	}
 	@Override public boolean onCreateOptionsMenu(Menu menu){
 		getMenuInflater().inflate(R.menu.console_panel, menu);

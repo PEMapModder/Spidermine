@@ -1,10 +1,9 @@
 package pemapmodder.spidermine;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import pemapmodder.spidermine.objects.Command;
+import android.widget.Toast;
 import pemapmodder.spidermine.objects.CommandIssuer;
 
 
@@ -14,62 +13,26 @@ public class Console implements CommandIssuer{
 	public OutputStreamWriter out;
 	public Console(SpiderServer server){
 		this.server=server;
-		try{
-			File out=new File(Utils.getServerDir(server), "console output.log");
-			out.createNewFile();
-			this.out=new OutputStreamWriter(new java.io.FileOutputStream(out));
-			int i=1;
-			File in=new File(Utils.getServerDir(server), "console input" + Integer.toString(i) + ".log");
-			while(in.isFile()){
-				i++;
-				in=new File(Utils.getServerDir(server), "console input" + Integer.toString(i) + ".log");
-			}
-			in.createNewFile();
-			OutputStreamWriter writeIn=new OutputStreamWriter(new java.io.FileOutputStream(in));
-			writeIn.write(new String("#Console input log started at " + "\n"));
-			writeIn.close();
-			this.in=new BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(in)), 1024);
-		}catch (IOException e){
-			// TODO Auto-generated catch block
-		}
 		
-	}
-	@Override public void out(String line){
-		try {
-			this.out.write(line);
-			this.out.write("\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		}
-	}
-	public class InputChecker implements Runnable{
-		@Override public void run(){
-			String line;
-			try {
-				while((line=in.readLine())!=null){
-					if(line.charAt(0)!='#'){
-						String[] pieces=line.split(" ", 2);
-						triggerCmd(pieces[0], pieces[1].split(" "));
-					}
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			}
-		}
-	}
-	@Override protected void finalize() throws Throwable{
-		in.close();
-		out.close();
-		super.finalize();
-	}
-	public void triggerCmd(String cmd, String[] params){
-		Command command=server.manager.cmd.get(cmd);
-		server.manager.cmd.invokeCmd(command, params, this);
-	}
-	@Override public int getType() {
-		return TYPE_CONSOLE;
 	}
 	public String toString(){
 		return "Console";
+	}
+	public void showLine(String line){
+		
+	}
+	@Override protected void finalize(){
+		try{
+			in.close();
+			out.close();
+		}catch(IOException e){
+			Toast.makeText(server.app, "[ERROR] Unable to close console I/O stream: \n"+e.toString(), Toast.LENGTH_LONG).show();
+		}
+	}
+	@Override public void out(String line){
+		showLine(line);
+	}
+	@Override public int getType(){
+		return TYPE_CONSOLE;
 	}
 }
