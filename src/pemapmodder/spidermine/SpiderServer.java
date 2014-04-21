@@ -35,6 +35,7 @@ public class SpiderServer extends Thread{
 	public Bundle[] scheduleData={};
 	public final Activity app;
 	public final File dir;
+	public final File worldDir;
 	protected void tickEvent(){
 		for(int i=0; i<scheduleRuns.length; i++){//check schedules
 			scheduleTimeLeft[i]--;
@@ -70,6 +71,8 @@ public class SpiderServer extends Thread{
 		name=options.getString(OPTIONS_name, "SpiderMine MCPE Server");
 		manager=new ServerManager(this);
 		this.dir=dir;
+		this.worldDir=new File(dir, "worlds/");
+		worldDir.mkdirs();
 	}
 	@Override public synchronized void start(){
 		super.start();

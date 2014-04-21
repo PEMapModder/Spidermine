@@ -8,11 +8,4 @@ public class ServerStopEvent extends Event{
 	public ServerStopEvent(SpiderServer server){
 		super(server);
 	}
-	public Bundle getOutput(){
-		return null;
-	}
-	@Override public void evalResult(Bundle data){
-		// TODO Auto-generated method stub
-		
-	}
 }
