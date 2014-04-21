@@ -1,7 +1,10 @@
 package pemapmodder.spidermine.network.packet;
 
-public abstract class Packet{
-	public static Packet fromName(String className){
-		
+public class Packet{
+	public static Packet fromName(byte[] data){
+		switch(data[0]){
+			
+		}
+		return new Packet();
 	}
 }
